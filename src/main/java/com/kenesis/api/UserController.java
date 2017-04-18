@@ -52,10 +52,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/user/{userid}", method = RequestMethod.GET)
-	public @ResponseBody String showUserInfo(@PathVariable("userid")String userid) {
-		logger.info("showUserInfo");
-		service.userinfo(userid);
-		return "success";
+	public @ResponseBody UserVO showUserInfo(@PathVariable("userid")String userid) {		
+		UserVO vo = (UserVO) service.userinfo(userid);
+		logger.info("showUserInfo : ",vo );
+		return vo;
 	}
 	
 }
