@@ -10,37 +10,35 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kenesis.domain.UserVO;
-import com.kenesis.persistence.UserDAO;
+import com.kenesis.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class UserDAOTest {
+public class UserServiceTest {
 	@Inject
-	private UserDAO dao;
+	UserService service;
 	
 	@Before
-	public void testInsertMember() throws Exception{
+	public void testSignUp()
+	{
 		UserVO vo = new UserVO();
 		
-		vo.setUserid("user00");
-		vo.setUserpw("user00");
-		vo.setHomelocation("/home/myraous");
+		vo.setUserid("test00");
+		vo.setUserpw("15321");
+		vo.setHomelocation("/home/jingukim/");
 		
-		dao.insertUser(vo);
-	}	
-	
-	@Test
-	public void testReadWithPW() throws Exception{
-		dao.readWithPW("user00", "user00");
+		service.signup(vo);
 	}
 	
 	@Test
-	public void testRead() throws Exception{
-		dao.readUser("user00");
+	public void testUserInfo()
+	{
+		service.userinfo("test00");
 	}
 	
 	@After
-	public void testDelete() throws Exception{
-		dao.deleteUser("user00");
+	public void testSignOut()
+	{
+		service.signout("test00");
 	}
 }

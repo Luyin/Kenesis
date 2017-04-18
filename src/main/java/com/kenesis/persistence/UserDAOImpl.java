@@ -19,7 +19,17 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public void insertUser(UserVO vo){
-		 sqlSession.insert(namespace + ".insertMember", vo);
+		 sqlSession.insert(namespace + ".insertUser", vo);
+	}
+	
+	@Override
+	public void deleteUser(String userid) {						
+		sqlSession.selectOne(namespace + ".deleteUser", userid);
+	}
+
+	@Override
+	public UserVO readUser(String userid) {
+		return (UserVO) sqlSession.selectOne(namespace + ".readUser", userid);
 	}
 
 	@Override
@@ -30,15 +40,5 @@ public class UserDAOImpl implements UserDAO{
 		paramMap.put("userpw", userpw);
 		
 		return (UserVO) sqlSession.selectOne(namespace + ".readWithPW", paramMap);
-	}
-	
-	@Override
-	public void deleteWithPW(String userid, String userpw) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		
-		paramMap.put("userid", userid);
-		paramMap.put("userpw", userpw);
-		
-		sqlSession.selectOne(namespace + ".deleteWithPW", paramMap);
 	}
 }

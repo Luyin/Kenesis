@@ -29,5 +29,6 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	<context:component-scan base-package="com.kenesis.persistence"></context:component-scan>	
+	<context:component-scan base-package="com.kenesis.persistence"></context:component-scan>
+	<context:component-scan base-package="com.kenesis.service"></context:component-scan>
 </beans>
