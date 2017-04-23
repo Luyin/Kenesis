@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kenesis.mappers.UserMapper">  
+  <insert id="insertUser">
+  	insert into tbl_user (userid, userpw, homelocation) values (#{userid}, #{userpw}, #{homelocation})
+  </insert>
+  
+  <select id="readWithPW" resultType="com.kenesis.domain.UserVO">
+  	select * from tbl_user where userid = #{userid} and userpw = #{userpw}
+  </select>
+  
+  <select id="readUser" resultType="com.kenesis.domain.UserVO">
+  	select * from tbl_user where userid = #{userid}
+  </select>
+  
+  <delete id="deleteUser">
+  	delete from tbl_user where userid = #{userid}
+  </delete>
+</mapper>
