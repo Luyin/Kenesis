@@ -7,15 +7,15 @@
   	insert into tbl_user (userid, userpw, homelocation) values (#{userid}, #{userpw}, #{homelocation})
   </insert>
   
-  <select id="readWithPW" resultType="com.kenesis.domain.UserVO">
-  	select * from tbl_user where userid = #{userid} and userpw = #{userpw}
-  </select>
+  <delete id="deleteUser">
+  	delete from tbl_user where userid = #{userid}
+  </delete>
+  
+  <update id="updateUser">
+  	update tbl_user set userpw = #{userpw}, homelocation = #{homelocation} where userid = #{userid} 
+  </update>
   
   <select id="readUser" resultType="com.kenesis.domain.UserVO">
   	select * from tbl_user where userid = #{userid}
   </select>
-  
-  <delete id="deleteUser">
-  	delete from tbl_user where userid = #{userid}
-  </delete>
 </mapper>

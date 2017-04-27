@@ -10,14 +10,14 @@
  
    <http use-expressions="true">
       <intercept-url pattern="/login*" access="isAnonymous()" />
-      <intercept-url pattern="/**" access="isAuthenticated()"/>
+	  <intercept-url pattern="/**" access="isAuthenticated()"/>
  
       <form-login
-         login-page='/login'
-         default-target-url="/home"
+         login-page='../'
+         default-target-url="../views/home.html"
          authentication-failure-url="/login?error=true" />
       <logout logout-success-url="/login" />
- 
+ 	  <csrf disabled="true"/>
    </http>
    
    <authentication-manager>

@@ -5,10 +5,10 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kenesis.domain.UserVO;
@@ -30,17 +30,9 @@ public class UserController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public @ResponseBody String createUser(@ModelAttribute("userid")String userid, @ModelAttribute("userpw")String userpw, @ModelAttribute("homelocation")String homelocation) {
+	public @ResponseBody String createUser(UserVO vo) {
 		logger.info("createUser");
-		
-		UserVO vo = new UserVO();
-		
-		vo.setUserid(userid);
-		vo.setUserpw(userpw);
-		vo.setHomelocation(homelocation);
-		
 		service.signup(vo);
-		
 		return "success";
 	}
 	
@@ -52,10 +44,33 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/user/{userid}", method = RequestMethod.GET)
-	public @ResponseBody UserVO showUserInfo(@PathVariable("userid")String userid) {		
-		UserVO vo = (UserVO) service.userinfo(userid);
+	public @ResponseBody UserVO readUser(@PathVariable("userid")String userid) {		
+		UserVO vo = (UserVO) service.read(userid);
 		logger.info("showUserInfo : ",vo );
 		return vo;
+	}
+	
+	@RequestMapping(value = "/user/{userid}", method = RequestMethod.POST)
+	public @ResponseBody String updateUser(@PathVariable("userid")String userid, @RequestParam("userpw")String userpw, @RequestParam("homelocation")String homelocation ) {
+		logger.info("updateUser");
+		
+		UserVO vo = (UserVO) service.read(userid);
+		
+		if(userpw != null)
+		{
+			vo.setUserpw(userpw);
+		}
+		
+		if(homelocation != null)
+		{
+			vo.setHomelocation(homelocation);
+		}
+		
+		logger.info(vo.toString());
+		
+		service.update(vo);
+		
+		return "success";
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.kenesis.api;
+package com.kenesis.service;
 
 import javax.inject.Inject;
 
@@ -23,22 +23,34 @@ public class UserServiceTest {
 	{
 		UserVO vo = new UserVO();
 		
-		vo.setUserid("test00");
-		vo.setUserpw("15321");
-		vo.setHomelocation("/home/jingukim/");
+		vo.setUserid("admin");
+		vo.setUserpw("5gksghk!!");
+		vo.setHomelocation("/home/myraous/");
 		
 		service.signup(vo);
 	}
 	
 	@Test
-	public void testUserInfo()
+	public void testViewInfo()
 	{
-		service.userinfo("test00");
+		service.read("admin");
+	}
+	
+	@Test
+	public void testUpdateInfo()
+	{
+		UserVO vo = new UserVO();
+		
+		vo.setUserid("admin");
+		vo.setUserpw("5tkatjd!");
+		vo.setHomelocation("/home/myraous/");
+		
+		service.update(vo);
 	}
 	
 	@After
 	public void testSignOut()
 	{
-		service.signout("test00");
+		service.signout("admin");
 	}
 }

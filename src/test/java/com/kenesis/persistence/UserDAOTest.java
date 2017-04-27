@@ -1,4 +1,4 @@
-package com.kenesis.api;
+package com.kenesis.persistence;
 
 import javax.inject.Inject;
 
@@ -22,25 +22,30 @@ public class UserDAOTest {
 	public void testInsertMember() throws Exception{
 		UserVO vo = new UserVO();
 		
-		vo.setUserid("user00");
-		vo.setUserpw("user00");
+		vo.setUserid("admin");
+		vo.setUserpw("5gksghk!");
 		vo.setHomelocation("/home/myraous");
 		
 		dao.insertUser(vo);
 	}	
-	
 	@Test
-	public void testReadWithPW() throws Exception{
-		dao.readWithPW("user00", "user00");
+	public void testUpdate() throws Exception {
+		UserVO vo = new UserVO();
+		
+		vo.setUserid("admin");
+		vo.setUserpw("5tkatjd!!");
+		vo.setHomelocation("/home/myraous");
+		
+		dao.updateUser(vo);
 	}
 	
 	@Test
 	public void testRead() throws Exception{
-		dao.readUser("user00");
+		dao.readUser("admin");
 	}
 	
 	@After
 	public void testDelete() throws Exception{
-		dao.deleteUser("user00");
+		dao.deleteUser("admin");
 	}
 }

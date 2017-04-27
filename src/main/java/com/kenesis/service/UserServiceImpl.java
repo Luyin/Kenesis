@@ -14,7 +14,13 @@ public class UserServiceImpl implements UserService {
 	UserDAO dao;
 
 	@Override
-	public UserVO userinfo(String userid) {
+	public void update(UserVO vo) {
+		// TODO Auto-generated method stub
+		dao.updateUser(vo);
+	}
+
+	@Override
+	public UserVO read(String userid) {
 		return (UserVO) dao.readUser(userid);
 	}
 

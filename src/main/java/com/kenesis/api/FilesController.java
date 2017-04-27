@@ -27,12 +27,12 @@ public class FilesController {
 	@Inject
 	UserService service;
 	
-	@RequestMapping(value = "/files/{userid}", method = RequestMethod.GET )
-	public @ResponseBody Map<String, String> getFilelists(@PathVariable("userid")String userid, @ModelAttribute("location")String location)
+	@RequestMapping(value = "/files/{userid}/{location}", method = RequestMethod.GET )
+	public @ResponseBody Map<String, String> getFilelists(@PathVariable("userid")String userid, @PathVariable("location")String location)
 	{
 		logger.info("/files/" + userid);
 		Map<String, String> mfiles = new HashMap<String, String>();
-		UserVO vo = (UserVO)service.userinfo(userid);
+		UserVO vo = (UserVO)service.read(userid);
 		
 		try {
 			String source = vo.getHomelocation() + location;
@@ -49,8 +49,12 @@ public class FilesController {
 				}
 				else
 				{
+					String strFileName = filesList[i].getName();
+					int pos = strFileName.lastIndexOf( "." );
+					String ext = strFileName.substring( pos + 1 );
+
 					//Not Directory
-					mfiles.put(filesList[i].getPath(), "File");
+					mfiles.put(filesList[i].getPath(), ext);
 				}
 			}
 			

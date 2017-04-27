@@ -7,5 +7,7 @@ public interface UserService {
 	
 	public void signout(String userid);
 	
-	public UserVO userinfo(String userid);
+	public void update(UserVO vo);
+	
+	public UserVO read(String userid);
 }

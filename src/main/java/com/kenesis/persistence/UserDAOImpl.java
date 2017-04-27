@@ -1,8 +1,5 @@
 package com.kenesis.persistence;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,19 +23,14 @@ public class UserDAOImpl implements UserDAO{
 	public void deleteUser(String userid) {						
 		sqlSession.selectOne(namespace + ".deleteUser", userid);
 	}
+		
+	@Override
+	public void updateUser(UserVO vo) {
+		sqlSession.update(namespace + ".updateUser", vo);
+	}
 
 	@Override
 	public UserVO readUser(String userid) {
 		return (UserVO) sqlSession.selectOne(namespace + ".readUser", userid);
-	}
-
-	@Override
-	public UserVO readWithPW(String userid, String userpw) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		
-		paramMap.put("userid", userid);
-		paramMap.put("userpw", userpw);
-		
-		return (UserVO) sqlSession.selectOne(namespace + ".readWithPW", paramMap);
 	}
 }
