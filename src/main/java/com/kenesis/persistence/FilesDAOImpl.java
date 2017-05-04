@@ -1,6 +1,8 @@
 package com.kenesis.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -26,5 +28,13 @@ public class FilesDAOImpl implements FilesDAO {
 	public void insertFiles(FilesVO vo) {
 		sqlSession.insert(namespace + ".insertFiles", vo);
 	}
-	
+
+	@Override
+	public FilesVO readFile(String userid, String location) {
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("userid", userid);
+		paramMap.put("location", location);
+		
+		return sqlSession.selectOne(namespace + ".readFile", paramMap);
+	}
 }

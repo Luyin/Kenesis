@@ -3,7 +3,7 @@ package com.kenesis.domain;
 public class FileListVO {
 	private String path;
 	private String type;
-	private boolean encoded;
+	private String fileid;
 
 	public String getPath() {
 		return path;
@@ -17,10 +17,15 @@ public class FileListVO {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public boolean isEncoded() {
-		return encoded;
+
+	public String getFileid() {
+		return fileid;
 	}
-	public void setEncoded(boolean encoded) {
-		this.encoded = encoded;
+	public void setFileid(String fileid) {
+		this.fileid = fileid;
+	}
+	@Override
+	public String toString() {
+		return "FileListVO [path=" + path + ", type=" + type + ", fileid=" + fileid + "]";
 	}
 }

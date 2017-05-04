@@ -52,6 +52,12 @@ public class FilesServiceTest {
 		filesService.viewDirectory(filesVO);
 	}
 	
+	@Test
+	public void testReadFile()
+	{
+		filesService.readFile("userid", "/home/myraous");
+	}
+	
 	@After
 	public void testRemoveUser()
 	{

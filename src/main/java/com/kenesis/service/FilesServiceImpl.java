@@ -25,4 +25,8 @@ public class FilesServiceImpl implements FilesService {
 		dao.insertFiles(vo);
 	}
 
+	@Override
+	public FilesVO readFile(String userid, String location) {
+		return dao.readFile(userid, location);
+	}
 }

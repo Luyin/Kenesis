@@ -50,47 +50,81 @@ public class FilesController {
 			String source = userVO.getHomelocation() + "/" + querylocation;
 			logger.info("location :" + source);
 			File dir = new File(source);
-			File[] filesList = dir.listFiles();
 			
-			for(int i=0; i<filesList.length; i++)
+			logger.info("isDirectory : " + dir.isDirectory());
+			logger.info("isFile : " + dir.isFile());
+
+			if(dir.isDirectory())
 			{
-				FileListVO fileListVO = new FileListVO();
+				File[] filesList = dir.listFiles();
 				
+				for(int i=0; i<filesList.length; i++)
+				{
+					FileListVO fileListVO = new FileListVO();
+					
+					// 1. Set Path
+					fileListVO.setPath(filesList[i].getPath());
+					
+					// 2. Set Type
+					if(filesList[i].isDirectory())
+					{
+						fileListVO.setType("Directory");
+					}
+					else
+					{
+						String strFileName = filesList[i].getName();
+						int pos = strFileName.lastIndexOf( "." );
+						String ext = strFileName.substring( pos + 1 );
+
+						fileListVO.setType(ext);
+					}
+					
+					// 3. Set FileID
+					fileListVO.setFileid(String.valueOf(-1));
+					for(int j=0; j<mEncodedList.size(); j++)
+					{
+						FilesVO vo = mEncodedList.get(j);
+						if(filesList[i].getPath().equals(userVO.getHomelocation() + "/" + vo.getLocation()))
+						{
+							fileListVO.setFileid(String.valueOf(vo.getFileid()));
+							break;
+						}
+					}
+					
+					
+					logger.info(fileListVO.toString());
+					
+					mfileList.add(fileListVO);
+				}
+			}
+			else if(dir.isFile())// source is file
+			{
+				
+				FileListVO fileListVO = new FileListVO();
 				// 1. Set Path
-				fileListVO.setPath(filesList[i].getPath());
+				fileListVO.setPath(dir.getPath());
 				
 				// 2. Set Type
-				if(filesList[i].isDirectory())
-				{
-					fileListVO.setType("Directory");
-				}
-				else
-				{
-					String strFileName = filesList[i].getName();
-					int pos = strFileName.lastIndexOf( "." );
-					String ext = strFileName.substring( pos + 1 );
-
-					fileListVO.setType(ext);
-				}
+				String strFileName = dir.getName();
+				int pos = strFileName.lastIndexOf( "." );
+				String ext = strFileName.substring( pos + 1 );
+				fileListVO.setType(ext);
 				
-				// 3. Set Encoded
-				
-				fileListVO.setEncoded(false);
+				// 3. Set FileID
+				fileListVO.setFileid(String.valueOf(-1));
 				for(int j=0; j<mEncodedList.size(); j++)
 				{
-					FilesVO encodeVO = mEncodedList.get(j);
-					
-					//Compare Absolute Path
-					if((userVO.getHomelocation() + "/" + encodeVO.getLocation()).equals(filesList[i].getPath()))
+					FilesVO vo = mEncodedList.get(j);
+					if(dir.getPath().equals(userVO.getHomelocation() + "/" + vo.getLocation()))
 					{
-						fileListVO.setEncoded(true);
+						fileListVO.setFileid(String.valueOf(vo.getFileid()));
+						break;
 					}
 				}
 				
-				logger.info(fileListVO.toString());
-				
 				mfileList.add(fileListVO);
 			}
+			
 			
 			return mfileList;	
 		}catch(Exception e){

@@ -10,4 +10,8 @@
   <insert id="insertFiles">
   	insert into tbl_file (userid, location) values (#{userid}, #{location})
   </insert>
+  
+  <select id="readFile" resultType="com.kenesis.domain.FilesVO">
+  	select * from tbl_file where userid = #{userid} AND location = #{location}
+  </select>
 </mapper>

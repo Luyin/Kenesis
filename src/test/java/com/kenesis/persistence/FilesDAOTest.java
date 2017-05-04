@@ -61,6 +61,13 @@ public class FilesDAOTest {
 		}
 	}
 	
+	@Test
+	public void testReadFile()
+	{
+		filesDAO.readFile("admin", "/home/myraous");
+	}
+	
+	
 	@After
 	public void testRemoveUser()
 	{	

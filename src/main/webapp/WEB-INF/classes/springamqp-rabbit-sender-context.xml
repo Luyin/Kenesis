@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+    xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+	
+    <!-- A reference to the org.springframework.amqp.rabbit.connection.ConnectionFactory -->
+    <rabbit:connection-factory id="connectionFactory" 
+	host="luyin.iptime.org" port="9002" virtual-host="kenesisHost"
+	username="kenesisService" password="kenesis"/>
+
+    <!-- Creates a org.springframework.amqp.rabbit.core.RabbitTemplate for access to the broker -->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+
+    <!-- Creates a org.springframework.amqp.rabbit.core.RabbitAdmin  to manage exchanges, queues and bindings -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!-- Creates a queue for consumers to retrieve messages -->
+    <rabbit:queue name="encode"/>
+    <rabbit:queue name="delete"/>
+    
+</beans>
