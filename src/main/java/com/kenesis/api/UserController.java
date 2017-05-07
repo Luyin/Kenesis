@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,16 +27,6 @@ public class UserController {
 	@Inject
 	UserService service;
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public @ResponseBody String createUser(UserVO vo) {
-		logger.info("createUser");
-		service.signup(vo);
-		return "success";
-	}
-	
 	@RequestMapping(value = "/user/{userid}", method = RequestMethod.DELETE)
 	public @ResponseBody String deleteUser(@PathVariable("userid")String userid) {
 		logger.info("deleteUser");
@@ -46,7 +37,7 @@ public class UserController {
 	@RequestMapping(value = "/user/{userid}", method = RequestMethod.GET)
 	public @ResponseBody UserVO readUser(@PathVariable("userid")String userid) {		
 		UserVO vo = (UserVO) service.read(userid);
-		logger.info("showUserInfo : ",vo );
+		logger.info("showUserInfo : ",userid );
 		return vo;
 	}
 	
