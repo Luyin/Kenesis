@@ -11,8 +11,7 @@ import java.util.Date;
  * All user information handled by the JWT token
  */
 public class JwtUser implements UserDetails {
-
-    private String username;
+	private String username;
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -21,6 +20,13 @@ public class JwtUser implements UserDetails {
     public JwtUser(String username, Date creationDate) {
         this(username, creationDate, Collections.EMPTY_LIST);
     }
+    
+    public JwtUser(String username, Collection<? extends GrantedAuthority> authorities, Date creationDate) {
+		super();
+		this.username = username;
+		this.authorities = authorities;
+		this.creationDate = creationDate;
+	}
 
     public JwtUser(String username, Date creationDate, Collection<? extends GrantedAuthority> authorities) {
         this.username = username;

@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,8 +45,10 @@ public class EncodeController {
 	@RequestMapping(value = "/encode", method = RequestMethod.POST )
 	public @ResponseBody String EncodeVideo(@RequestParam("location")String location)
 	{
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String userid = auth.getName();
+		
 		logger.info("POST /encode form: location=" + location);
-		String userid = "admin";
 		
 		FilesVO filesVO = new FilesVO();
 		
