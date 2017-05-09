@@ -28,7 +28,10 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
+	<bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+     <constructor-arg name="strength" value="256"/>
+ 	</bean>
 	
 	<context:component-scan base-package="com.kenesis.persistence"></context:component-scan>
-	<context:component-scan base-package="com.kenesis.service"></context:component-scan>
+	<context:component-scan base-package="com.kenesis.service"></context:component-scan>	
 </beans>

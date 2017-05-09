@@ -8,6 +8,7 @@
                         http://www.springframework.org/schema/security/spring-security-4.2.xsd"> 	
  	
  	<security:http pattern="/auth" security="none"/>
+ 	<security:http pattern="/auth/register" security="none"/>
  
     <security:http pattern="/**" entry-point-ref="jwtAuthenticationEntryPoint" create-session="stateless" use-expressions="true">
     	<security:csrf disabled="true"/>
@@ -16,8 +17,7 @@
  
     <security:authentication-manager alias="authenticationManager">
        <security:authentication-provider ref="jwtAuthenticationDetailsProvider"/>
-    </security:authentication-manager>
-    
+    </security:authentication-manager>    
     <bean id="jwtAuthenticationEntryPoint" class="com.kenesis.security.JwtAuthenticationEntryPoint"/>
     <bean id="jwtAuthenticationUserService" class="com.kenesis.security.JwtAuthenticationUserService"/>
     <bean id="jwtAuthenticationSuccessHandler" class="com.kenesis.security.JwtAuthenticationSuccessHandler"/>

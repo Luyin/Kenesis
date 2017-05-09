@@ -3,6 +3,7 @@ package com.kenesis.api;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.apache.commons.io.IOUtils;
@@ -11,10 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,9 @@ public class AuthController {
 	
 	@Inject
 	private AuthenticationManager authenticationManager;
-
+	
+	@Resource(name="passwordEncoder")
+ 	private ShaPasswordEncoder passwordEncoder;
 	
 	@RequestMapping(value = "/auth", method = RequestMethod.POST )
     public ResponseEntity<?> authenticationRequest(@RequestBody AutehnticationRequest authenticationRequest) throws AuthenticationException, IOException, JOSEException{
@@ -46,11 +47,11 @@ public class AuthController {
 		logger.info("/auth");
 		
         String userid = authenticationRequest.getUserid();
-        String password = authenticationRequest.getPassword();
+        String rawPassword = authenticationRequest.getPassword();
         
         UserVO vo = userService.read(userid);
         
-        if(!password.equals(vo.getUserpw()))
+        if(!passwordEncoder.isPasswordValid(vo.getUserpw(), rawPassword, null))
         {
         	new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
@@ -65,7 +66,7 @@ public class AuthController {
     }
 	
 	@RequestMapping(value = "/auth/register", method = RequestMethod.POST)
-	public @ResponseBody String createUser(UserVO vo) {
+	public @ResponseBody String createUser(@RequestBody UserVO vo) {
 		logger.info("createUser");
 		userService.signup(vo);
 		return "success";
