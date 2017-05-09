@@ -18,8 +18,4 @@
   <select id="readUser" resultType="com.kenesis.domain.UserVO">
   	select * from tbl_user where userid = #{userid}
   </select>
-  
-  <update id="updateEncode">
-    update tbl_encode set status = #{status}, progress = #{progress} where fileid = #{fileid}
-  </update>
 </mapper>
