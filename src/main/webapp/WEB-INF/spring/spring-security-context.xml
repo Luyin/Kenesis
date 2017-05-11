@@ -7,12 +7,17 @@
                         http://www.springframework.org/schema/security
                         http://www.springframework.org/schema/security/spring-security-4.2.xsd"> 	
  	
- 	<security:http pattern="/auth" security="none"/>
- 	<security:http pattern="/auth/register" security="none"/>
- 
+ 	
+ 	<security:http auto-config="true" pattern="/auth">
+ 		<security:csrf disabled="true"/>
+ 		<security:intercept-url pattern="/auth" requires-channel="https"/>
+ 		<security:intercept-url pattern="/auth/register" requires-channel="https"/>
+ 	</security:http>
+ 		
     <security:http pattern="/**" entry-point-ref="jwtAuthenticationEntryPoint" create-session="stateless" use-expressions="true">
     	<security:csrf disabled="true"/>
         <security:custom-filter before="FORM_LOGIN_FILTER" ref="jwtAuthenticationFilter"/>
+        <security:intercept-url pattern="/**" requires-channel="https"/>
     </security:http>
  
     <security:authentication-manager alias="authenticationManager">
