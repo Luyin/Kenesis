@@ -53,7 +53,7 @@ public class AuthController {
         
         if(!passwordEncoder.isPasswordValid(vo.getUserpw(), rawPassword, null))
         {
-        	new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        	return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 
         String secret = IOUtils.toString(getClass().getClassLoader().getResourceAsStream("secret.key"), Charset.defaultCharset().displayName());
@@ -65,7 +65,7 @@ public class AuthController {
         return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 	
-	@RequestMapping(value = "/auth/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/auth/registeration", method = RequestMethod.POST)
 	public @ResponseBody String createUser(@RequestBody UserVO vo) {
 		logger.info("createUser");
 		userService.signup(vo);
