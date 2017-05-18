@@ -11,7 +11,11 @@
  	<security:http auto-config="true" pattern="/auth">
  		<security:csrf disabled="true"/>
  		<security:intercept-url pattern="/auth" requires-channel="https"/>
- 		<security:intercept-url pattern="/auth/register" requires-channel="https"/>
+ 	</security:http>
+ 	
+ 	 <security:http auto-config="true" pattern="/auth/registeration">
+ 		<security:csrf disabled="true"/>
+ 		<security:intercept-url pattern="/auth/registeration" requires-channel="https"/>
  	</security:http>
  		
     <security:http pattern="/**" entry-point-ref="jwtAuthenticationEntryPoint" create-session="stateless" use-expressions="true">
